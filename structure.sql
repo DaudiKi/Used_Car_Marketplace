@@ -37,14 +37,6 @@ CREATE TABLE `advertisements` (
   `status` enum('Active','Sold','Expired') NOT NULL DEFAULT 'Active'
 ) ;
 
---
--- Dumping data for table `advertisements`
---
-
-INSERT INTO `advertisements` (`ad_id`, `car_id`, `title`, `description`, `price`, `date_posted`, `status`) VALUES
-(1, 1, 'Toyota Hilux 2020 Model (Nairobi)', 'Excellent condition, used for off road ready.', 3500000.00, '2026-01-08 10:37:43', 'Active'),
-(2, 2, 'Subaru Forester 2019 (Nairobi)', 'Well maintained, turbo spec.', 2800000.00, '2026-01-08 10:37:43', 'Active');
-
 -- --------------------------------------------------------
 
 --
@@ -59,16 +51,6 @@ CREATE TABLE `bids` (
   `bid_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ;
 
---
--- Dumping data for table `bids`
---
-
-INSERT INTO `bids` (`bid_id`, `ad_id`, `buyer_id`, `bid_amount`, `bid_date`) VALUES
-(1, 1, 1, 3600000.00, '2026-01-08 10:58:32'),
-(2, 1, 2, 3700000.00, '2026-01-08 10:58:32'),
-(3, 2, 1, 2800000.00, '2026-01-08 10:58:32'),
-(4, 2, 2, 2900000.00, '2026-01-08 10:58:32');
-
 -- --------------------------------------------------------
 
 --
@@ -79,15 +61,6 @@ CREATE TABLE `brands` (
   `brand_id` int(11) NOT NULL,
   `brand_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `brands`
---
-
-INSERT INTO `brands` (`brand_id`, `brand_name`) VALUES
-(2, 'Ford'),
-(3, 'Subaru'),
-(1, 'Toyota');
 
 -- --------------------------------------------------------
 
@@ -106,14 +79,6 @@ CREATE TABLE `cars` (
   `seller_id` int(11) NOT NULL
 ) ;
 
---
--- Dumping data for table `cars`
---
-
-INSERT INTO `cars` (`car_id`, `vin`, `model_id`, `year_manufacture`, `mileage`, `color`, `transmission_type`, `seller_id`) VALUES
-(1, 'JUMA123VIN9876543', 1, '2020', 45000, NULL, 'Automatic', 1),
-(2, 'JUMA456VIN1234567', 3, '2019', 70000, NULL, 'Manual', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -126,25 +91,6 @@ CREATE TABLE `cities` (
   `country` varchar(100) NOT NULL DEFAULT 'Kenya'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `cities`
---
-
-INSERT INTO `cities` (`city_id`, `city_name`, `country`) VALUES
-(1, 'Nairobi', 'Kenya'),
-(2, 'Mombasa', 'Kenya'),
-(3, 'Kisumu', 'Kenya'),
-(4, 'Kampala', 'Uganda'),
-(5, 'Entebbe', 'Uganda'),
-(6, 'Jinja', 'Uganda'),
-(7, 'Dar es Salaam', 'Tanzania'),
-(8, 'Zanzibar City', 'Tanzania'),
-(9, 'Arusha', 'Tanzania'),
-(10, 'Kigali', 'Rwanda'),
-(11, 'Bujumbura', 'Burundi'),
-(12, 'Addis Ababa', 'Ethiopia'),
-(13, 'Juba', 'South Sudan');
-
 -- --------------------------------------------------------
 
 --
@@ -156,16 +102,6 @@ CREATE TABLE `models` (
   `model_name` varchar(50) NOT NULL,
   `brand_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `models`
---
-
-INSERT INTO `models` (`model_id`, `model_name`, `brand_id`) VALUES
-(1, 'Hilux', 1),
-(2, 'Explorer', 2),
-(3, 'Forester', 3),
-(4, 'Corolla', 1);
 
 -- --------------------------------------------------------
 
@@ -183,15 +119,6 @@ CREATE TABLE `users` (
   `city_id` int(11) NOT NULL,
   `role` enum('buyer','seller') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_id`, `full_name`, `email`, `password_hash`, `phone_number`, `registration_date`, `city_id`, `role`) VALUES
-(1, 'Kimani Roy', 'macharia.kimani@strathmore.edu', 'hashedpassword123', '+254798052554', '2026-01-08 10:37:43', 1, 'buyer'),
-(2, 'Daudi Makumbi', 'daudimakumbik@gmail.com', 'hashedpassword123', NULL, '2026-01-08 10:47:38', 1, 'buyer'),
-(3, 'Hussein Ahmed', 'husseinahmed@gmail.com', 'hashedpassword123', NULL, '2026-01-08 10:47:38', 2, 'seller');
 
 --
 -- Indexes for dumped tables
