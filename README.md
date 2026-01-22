@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
 
-*A comprehensive database system for managing an online car trading platform*
+*A production-ready database system for managing a comprehensive car trading platform*
 
 </div>
 
@@ -17,7 +17,7 @@
 - [Overview](#-overview)
 - [Database Schema](#-database-schema)
 - [Entity Relationship Diagram](#-entity-relationship-diagram)
-- [Sample Data](#-sample-data)
+- [Key Improvements & Best Practices](#-key-improvements--best-practices)
 - [Getting Started](#-getting-started)
 - [Sample Queries](#-sample-queries)
 - [Authors](#-authors)
@@ -26,20 +26,20 @@
 
 ## 🎯 Overview
 
-The **Car Marketplace Database** is a relational database system designed to simulate a real-world online car trading platform. It enables:
+The **Car Marketplace Database** is a normalized relational database system designed for a modern online car trading platform. It supports:
 
-- 🏢 **Sellers** to list their vehicles for sale
-- 🛒 **Buyers** to browse and bid on available cars
-- 📊 **Administrators** to manage the marketplace efficiently
+- 🏢 **Sellers**: List vehicles with detailed features and multiple images.
+- 🛒 **Buyers**: Browse listings, place bids, and track transaction history.
+- 📊 **Administrators**: Manage users, roles, and marketplace integrity.
 
 ### Key Features
 
-✅ Multi-city support across East Africa  
-✅ Support for multiple car brands and models  
-✅ User role management (Buyers & Sellers)  
-✅ Advertisement management system  
-✅ Real-time bidding functionality  
-✅ Complete transaction history tracking
+✅ **Multi-city support** across East Africa.  
+✅ **Normalization**: Separate tables for fuel and transmission types for scalability.  
+✅ **Feature Management**: M:N relationship for vehicle features (Sunroof, GPS, etc).  
+✅ **Multi-image support**: Multiple photos per advertisement.  
+✅ **Bid Lifecycle**: Track bid status (Pending, Accepted, Outbid).  
+✅ **Transaction Tracking**: Secure logging of completed sales and payments.
 
 ---
 
@@ -47,103 +47,20 @@ The **Car Marketplace Database** is a relational database system designed to sim
 
 ### Tables Overview
 
-| Table | Description | Primary Key |
-|-------|-------------|-------------|
-| 🏙️ **Cities** | Geographic locations | `city_id` |
-| 🚙 **Brands** | Car manufacturers | `brand_id` |
-| 🔧 **Models** | Car models by brand | `model_id` |
-| 👤 **Users** | Platform users (buyers/sellers) | `user_id` |
-| 🚗 **Cars** | Vehicle inventory | `vin` |
-| 📢 **Advertisements** | Car listings | `advertisement_id` |
-| 💰 **Bids** | Buyer offers on cars | `bid_id` |
-
-### Detailed Table Structures
-
-<details>
-<summary><b>🏙️ Cities</b></summary>
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `city_id` | INT (PK) | Unique city identifier |
-| `city_name` | VARCHAR | Name of the city |
-| `country` | VARCHAR | Country name |
-
-</details>
-
-<details>
-<summary><b>🚙 Brands</b></summary>
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `brand_id` | INT (PK) | Unique brand identifier |
-| `brand_name` | VARCHAR | Manufacturer name |
-
-</details>
-
-<details>
-<summary><b>🔧 Models</b></summary>
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `model_id` | INT (PK) | Unique model identifier |
-| `model_name` | VARCHAR | Model name |
-| `brand_id` | INT (FK) | References `Brands.brand_id` |
-
-</details>
-
-<details>
-<summary><b>👤 Users</b></summary>
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `user_id` | INT (PK) | Unique user identifier |
-| `full_name` | VARCHAR | User's full name |
-| `email` | VARCHAR | User's email address |
-| `password_hash` | VARCHAR | Encrypted password |
-| `city_id` | INT (FK) | References `Cities.city_id` |
-| `role` | ENUM | User role: `buyer` or `seller` |
-
-</details>
-
-<details>
-<summary><b>🚗 Cars</b></summary>
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `vin` | VARCHAR (PK) | Vehicle Identification Number |
-| `model_id` | INT (FK) | References `Models.model_id` |
-| `year_manufacture` | INT | Manufacturing year |
-| `mileage` | INT | Total kilometers driven |
-| `seller_id` | INT (FK) | References `Users.user_id` |
-| `transmission_type` | VARCHAR | Automatic or Manual |
-
-</details>
-
-<details>
-<summary><b>📢 Advertisements</b></summary>
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `advertisement_id` | INT (PK) | Unique ad identifier |
-| `car_id` | VARCHAR (FK) | References `Cars.vin` |
-| `title` | VARCHAR | Advertisement title |
-| `description` | TEXT | Detailed description |
-| `price` | DECIMAL | Asking price in KSh |
-
-</details>
-
-<details>
-<summary><b>💰 Bids</b></summary>
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `bid_id` | INT (PK) | Unique bid identifier |
-| `ad_id` | INT (FK) | References `Advertisements.advertisement_id` |
-| `buyer_id` | INT (FK) | References `Users.user_id` |
-| `bid_amount` | DECIMAL | Bid amount in KSh |
-| `bid_date` | TIMESTAMP | When the bid was placed |
-
-</details>
+| Table | Description |
+|-------|-------------|
+| 🏙️ **Cities** | Geographic locations across East Africa |
+| 🚙 **Brands** | Car manufacturers |
+| 🔧 **Models** | Model names linked to brands |
+| 👤 **Users** | Platform users with role-based access |
+| ⛽ **Fuel_Types** | Petrol, Diesel, Electric, Hybrid, etc. |
+| ⚙️ **Transmission_Types** | Manual, Automatic, CVT, etc. |
+| 🚗 **Cars** | Core vehicle details (VIN, mileage, engine) |
+| ✨ **Features** | Available vehicle options (e.g., Sunroof) |
+| 📢 **Advertisements** | Public car listings with pricing |
+| 📸 **Car_Images** | Image gallery for advertisements |
+| 💰 **Bids** | Negotiation history between buyers/sellers |
+| 📜 **Transactions** | Finalized sale records |
 
 ---
 
@@ -154,109 +71,56 @@ erDiagram
     Cities ||--o{ Users : "located_in"
     Brands ||--o{ Models : "has"
     Models ||--o{ Cars : "is_type_of"
-    Users ||--o{ Cars : "sells"
+    Fuel_Types ||--o{ Cars : "powers"
+    Transmission_Types ||--o{ Cars : "shifts"
+    Users ||--o{ Cars : "owns"
     Users ||--o{ Bids : "places"
-    Cars ||--o{ Advertisements : "advertised_as"
+    Cars ||--o{ Advertisements : "listed_in"
+    Cars ||--o{ Car_Features : "has"
+    Features ||--o{ Car_Features : "defines"
     Advertisements ||--o{ Bids : "receives"
+    Advertisements ||--o{ Car_Images : "shows"
+    Advertisements ||--o{ Transactions : "finalizes"
+    Users ||--o{ Transactions : "buys/sells"
 
-    Cities {
-        int city_id PK
-        varchar city_name
-        varchar country
-    }
-    
-    Brands {
-        int brand_id PK
-        varchar brand_name
-    }
-    
-    Models {
-        int model_id PK
-        varchar model_name
-        int brand_id FK
-    }
-    
     Users {
         int user_id PK
-        varchar full_name
-        varchar email
-        varchar password_hash
-        int city_id FK
+        varchar email UK
         enum role
+        bool is_active
     }
     
     Cars {
-        varchar vin PK
-        int model_id FK
-        int year_manufacture
+        varchar vin UK
         int mileage
-        int seller_id FK
-        varchar transmission_type
+        int fuel_type_id FK
+        int transmission_id FK
     }
     
     Advertisements {
-        int advertisement_id PK
-        varchar car_id FK
-        varchar title
-        text description
+        int ad_id PK
         decimal price
+        enum status
     }
     
     Bids {
         int bid_id PK
-        int ad_id FK
-        int buyer_id FK
         decimal bid_amount
-        timestamp bid_date
+        enum status
     }
 ```
 
 ---
 
-## 📦 Sample Data
+## 🛠️ Key Improvements & Best Practices
 
-### 🌍 Geographic Coverage
-
-**Cities** across East Africa:
-- 🇰🇪 **Kenya**: Nairobi, Mombasa, Kisumu
-- 🇺🇬 **Uganda**: Kampala, Entebbe, Jinja
-- 🇹🇿 **Tanzania**: Dar es Salaam, Zanzibar City, Arusha
-- 🇷🇼 **Rwanda**: Kigali
-- 🇧🇮 **Burundi**: Bujumbura
-- 🇪🇹 **Ethiopia**: Addis Ababa
-- 🇸🇸 **South Sudan**: Juba
-
-### 🚙 Available Brands & Models
-
-| Brand | Models |
-|-------|--------|
-| **Toyota** | Hilux, Corolla |
-| **Ford** | Explorer |
-| **Subaru** | Forester |
-
-### 👥 Platform Users
-
-| Name | Role | Location |
-|------|------|----------|
-| **Kimani Roy** | Seller | Nairobi 🏙️ |
-| **Daudi Makumbi** | Buyer | Nairobi 🏙️ |
-| **Hussein Ahmed** | Buyer | Nairobi 🏙️ |
-
-### 🚗 Current Inventory
-
-| Vehicle | Year | Transmission | Mileage | Seller | Price (KSh) |
-|---------|------|--------------|---------|--------|-------------|
-| Toyota Hilux | 2020 | Automatic | 45,000 km | Kimani | 3,500,000 |
-| Subaru Forester | 2019 | Manual | 70,000 km | Kimani | 2,800,000 |
-
-### 💰 Active Bids
-
-| Bidder | Vehicle | Bid Amount (KSh) | Status |
-|--------|---------|------------------|--------|
-| Daudi Makumbi | Toyota Hilux 2020 | 3,600,000 | 🟢 Active |
-| Hussein Ahmed | Toyota Hilux 2020 | 3,700,000 | 🟢 Active |
-| Daudi Makumbi | Subaru Forester 2019 | 2,800,000 | 🟢 Active |
-| Hussein Ahmed | Subaru Forester 2019 | 2,900,000 | 🟢 Active |
+1. **Normalization**: Moved `fuel_type` and `transmission_type` to separate tables to prevent data redundancy and allow easy addition of new types (like 'Hydrogen' or 'Semi-Auto').
+2. **Indexing**: Added crucial indexes on `price`, `mileage`, and `status` to ensure fast search results as the database grows.
+3. **Data Integrity**: 
+   - Used explicit naming for constraints (e.g., `fk_cars_models`).
+   - Implemented `ON DELETE CASCADE` for dependent records like images and car features.
+4. **Security**: Added `password_hash` for users (mimicking hashed storage) and `is_active` for account management.
+5. **Bid Status**: Introduced `bid_status` to track the lifecycle of an offer (Pending → Accepted/Rejected).
 
 ---
 
@@ -264,8 +128,8 @@ erDiagram
 
 ### Prerequisites
 
-- MySQL Server 5.7 or higher
-- MySQL Client or GUI tool (MySQL Workbench, phpMyAdmin, etc.)
+- MySQL Server 5.7+ or MariaDB 10.4+
+- MySQL Client / Workbench
 
 ### Installation
 
@@ -275,97 +139,46 @@ git clone https://github.com/DaudiKi/Used_Car_Marketplace.git
 cd Used_Car_Marketplace
 ```
 
-2️⃣ **Import the database**
+2️⃣ **Import the schema and data**
 ```bash
-mysql -u your_username -p < used_car_marketplace.sql
-```
-
-3️⃣ **Verify the import**
-```bash
-mysql -u your_username -p
-USE car_marketplace;
-SHOW TABLES;
-```
-
-### Usage Workflow
-
-```
-1. 👤 Register Users → Buyers and Sellers create accounts
-                ↓
-2. 🚗 Add Cars → Sellers add vehicles to inventory
-                ↓
-3. 📢 Create Ads → Sellers publish advertisements with prices
-                ↓
-4. 💰 Place Bids → Buyers submit offers on listings
-                ↓
-5. 📊 Review → View all bids and manage transactions
+mysql -u your_username -p < structure.sql
+mysql -u your_username -p < data.sql
 ```
 
 ---
 
 ## 🔍 Sample Queries
 
-### View All Active Bids
-
+### Find Highest Accepted Bid per Ad
 ```sql
 SELECT 
-    u.full_name AS bidder,
-    a.title AS car,
-    b.bid_amount,
-    b.bid_date
-FROM Bids b
-JOIN Users u ON b.buyer_id = u.user_id
-JOIN Advertisements a ON b.ad_id = a.advertisement_id
-ORDER BY b.bid_date DESC;
-```
-
-### Find Highest Bid Per Advertisement
-
-```sql
-SELECT 
-    a.title AS car,
-    MAX(b.bid_amount) AS highest_bid,
-    COUNT(b.bid_id) AS total_bids
+    a.title, 
+    MAX(b.bid_amount) as final_price
 FROM Advertisements a
-LEFT JOIN Bids b ON a.advertisement_id = b.ad_id
-GROUP BY a.advertisement_id, a.title;
+JOIN Bids b ON a.ad_id = b.ad_id
+WHERE b.bid_status = 'Accepted'
+GROUP BY a.ad_id;
 ```
 
-### List All Cars by Brand
-
+### Search Cars with Specific Features (e.g., Sunroof)
 ```sql
-SELECT 
-    br.brand_name,
-    m.model_name,
-    c.year_manufacture,
-    c.mileage,
-    c.transmission_type
+SELECT c.vin, m.model_name, f.feature_name
 FROM Cars c
 JOIN Models m ON c.model_id = m.model_id
-JOIN Brands br ON m.brand_id = br.brand_id
-ORDER BY br.brand_name, m.model_name;
+JOIN car_features cf ON c.car_id = cf.car_id
+JOIN features f ON cf.feature_id = f.feature_id
+WHERE f.feature_name = 'Sunroof';
 ```
 
 ---
 
 ## 👨‍💻 Authors
 
-<table>
-  <tr>
-    <td align="center">
-      <b>Daudi Kirabo Makumbi Mawejje</b><br>
-      Student ID: 189657
-    </td>
-    <td align="center">
-      <b>Kimani Roy Macharia</b><br>
-      Student ID: 191523
-    </td>
-    <td align="center">
-      <b>Ahmed Hussein</b><br>
-      Student ID: 193285
-    </td>
-  </tr>
-</table>
+| Name | Role | Student ID |
+|------|------|------------|
+| **Daudi Kirabo Makumbi Mawejje** | Backend & DB Design | 189657 |
+| **Kimani Roy Macharia** | UI/UX & Documentation | 191523 |
+| **Ahmed Hussein** | Quality Assurance | 193285 |
 
 ---
 
@@ -375,8 +188,7 @@ ORDER BY br.brand_name, m.model_name;
 
 This project is licensed under the MIT License.
 
-### ⭐ Star this repository if you found it helpful!
-
 Made with ❤️ for Database Management Systems
 
 </div>
+
