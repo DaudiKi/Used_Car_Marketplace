@@ -179,6 +179,7 @@ WHERE f.feature_name = 'Sunroof';
 | **Daudi Kirabo Makumbi Mawejje** | Backend & DB Design | 189657 |
 | **Kimani Roy Macharia** | UI/UX & Documentation | 191523 |
 | **Ahmed Hussein** | Quality Assurance | 193285 |
+| **Aditya More** | Contributor | - |
 
 ---
 
