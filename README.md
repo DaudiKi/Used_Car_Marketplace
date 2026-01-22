@@ -174,12 +174,12 @@ WHERE f.feature_name = 'Sunroof';
 
 ## 👨‍💻 Authors
 
-| Name | Role | Student ID |
-|------|------|------------|
-| **Daudi Kirabo Makumbi Mawejje** | Backend & DB Design | 189657 |
-| **Kimani Roy Macharia** | UI/UX & Documentation | 191523 |
-| **Ahmed Hussein** | Quality Assurance | 193285 |
-| **Aditya More** | Contributor | - |
+| Name | Student ID |
+|------|------------|
+| **Daudi Kirabo Makumbi Mawejje** | 189657 |
+| **Kimani Roy Macharia** | 191523 |
+| **Ahmed Hussein** | 193285 |
+| **Aditya More** | 193384 |
 
 ---
 
