@@ -1,5 +1,6 @@
 -- Database Schema for Used Car Marketplace
 -- Improved and Normalized Version
+-- Last Updated: 2026-01-22 by Aditya More
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
