@@ -212,6 +212,26 @@ CREATE TABLE `transactions` (
   CONSTRAINT `fk_trans_seller` FOREIGN KEY (`seller_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+-- Trigger: Auto-delete advertisement when transaction is completed
+-- Purpose: Query optimization by removing sold car listings
+-- --------------------------------------------------------
+
+DELIMITER $$
+
+CREATE TRIGGER `trg_delete_ad_on_completed_sale`
+AFTER INSERT ON `transactions`
+FOR EACH ROW
+BEGIN
+    -- When a transaction with 'Completed' status is inserted
+    -- Delete the corresponding advertisement to optimize queries
+    IF NEW.payment_status = 'Completed' THEN
+        DELETE FROM `advertisements` WHERE `ad_id` = NEW.ad_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
